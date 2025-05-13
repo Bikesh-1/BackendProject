@@ -1,0 +1,24 @@
+{
+  "name": "backendproject",
+  "version": "1.0.0",
+  "description": "a backend ",
+  "keywords": [
+    "javascript",
+    "backend"
+  ],
+  "homepage": "https://github.com/Bikesh-1/BackendProject#readme",
+  "bugs": {
+    "url": "https://github.com/Bikesh-1/BackendProject/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bikesh-1/BackendProject.git"
+  },
+  "license": "ISC",
+  "author": "Bikesh",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
