@@ -3,7 +3,7 @@ import {ApiError} from "../utils/ApiError.js"
 import {User} from "../models/user.model.js"
 import {uploadOnCloudinary} from "../utils/cloudinary.js"
 import { ApiResponse } from '../utils/ApiResponse.js';
-import { response } from 'express';
+
 
 const registerUser = asyncHandler( async(req,res) =>{
     //get user details from frontend
@@ -39,35 +39,22 @@ const registerUser = asyncHandler( async(req,res) =>{
     
 
 
-    if (!avatarLocalPath) {
-        throw new ApiError(400,"Avatar is required")
-    }
-
-    if (!avatar || !avatar.url) {
-    throw new ApiError(400, "Failed to upload avatar");
-}
-if (coverImageLocalPath && !coverImage?.url) {
-    console.warn("Cover image failed to upload");
-}
-
+       const avatar = await uploadOnCloudinary(avatarLocalPath)
+    const coverImage = await uploadOnCloudinary(coverImageLocalPath)
 
     if (!avatar) {
-        throw new ApiError(400,"Avatar is required")
+        throw new ApiError(400, "Avatar file is required")
     }
+   
 
-    try {
-  const user = await User.create({
-      fullName,
-      avatar: avatar.url,
-      coverImage: coverImage?.url || "",
-      email,
-      password,
-      username: username.toLowerCase()
-  });
-} catch (err) {
-  console.error("MongoDB User.create error:", err);
-  throw new ApiError(500, "Error creating user");
-}
+    const user = await User.create({
+        fullName,
+        avatar: avatar.url,
+        coverImage: coverImage?.url || "",
+        email, 
+        password,
+        username: username.toLowerCase()
+    })
 
 
     const createdUSer = await User.findById(user._id).select(
